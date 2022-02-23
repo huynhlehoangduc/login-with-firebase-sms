@@ -21,40 +21,6 @@ function getUiConfig() {
     // Opens IDP Providers sign-in flow in a popup.
     'signInFlow': 'popup',
     'signInOptions': [
-      // TODO(developer): Remove the providers you don't need for your app.
-      /*{
-        provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        // Required to enable ID token credentials for this provider.
-        clientId: CLIENT_ID
-      },
-      {
-        provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-        scopes :[
-          'public_profile',
-          'email',
-          'user_likes',
-          'user_friends'
-        ]
-      },
-      firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-      firebase.auth.GithubAuthProvider.PROVIDER_ID,
-      {
-        provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        // Whether the display name should be displayed in Sign Up page.
-        requireDisplayName: true,
-        signInMethod: getEmailSignInMethod(),
-        disableSignUp: {
-          status: getDisableSignUpStatus()
-        },
-      {
-        provider: 'microsoft.com',
-        loginHintKey: 'login_hint'
-      },
-      {
-        provider: 'apple.com',
-      },
-      firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
-      },*/
       {
         provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
         recaptchaParameters: {
