@@ -82,23 +82,6 @@ var ui = new firebaseui.auth.AuthUI(firebase.auth());
 ui.disableAutoSignIn();
 
 
-
-/**
- * Redirects to the FirebaseUI widget.
- */
-var signInWithRedirect = function() {
-  window.location.assign('/');
-};
-
-
-/**
- * Open a popup with the FirebaseUI widget.
- */
-var signInWithPopup = function() {
-  window.open('/', 'Sign In', 'width=985,height=735');
-};
-
-
 /**
  * Displays the UI for a signed in user.
  * @param {!firebase.User} user
@@ -162,31 +145,8 @@ var deleteAccount = function() {
   });
 };
 
-
-/**
- * Handles when the user changes the reCAPTCHA, email signInMethod or email
- * disableSignUp config.
- */
-function handleConfigChange() {
-  ui.reset();
-  ui.start('#firebaseui-container', getUiConfig());
+var signOut = function () {
+  firebase.auth().signOut();
 }
 
 
-/**
- * Initializes the app.
- */
-var initApp = function() {
-  document.getElementById('sign-in-with-redirect').addEventListener(
-      'click', signInWithRedirect);
-  document.getElementById('sign-in-with-popup').addEventListener(
-      'click', signInWithPopup);
-  document.getElementById('sign-out').addEventListener('click', function() {
-    firebase.auth().signOut();
-  });
-  document.getElementById('delete-account').addEventListener(
-      'click', function() {
-        deleteAccount();
-      });
-};
-window.addEventListener('load', initApp);
