@@ -1,21 +1,3 @@
-/*
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/**
- * FirebaseUI initialization to be used in a Single Page application context.
- */
-
 /**
  * @return {!Object} The FirebaseUI config.
  */
@@ -40,7 +22,7 @@ function getUiConfig() {
     'signInFlow': 'popup',
     'signInOptions': [
       // TODO(developer): Remove the providers you don't need for your app.
-      {
+      /*{
         provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         // Required to enable ID token credentials for this provider.
         clientId: CLIENT_ID
@@ -63,14 +45,7 @@ function getUiConfig() {
         signInMethod: getEmailSignInMethod(),
         disableSignUp: {
           status: getDisableSignUpStatus()
-        }
-      },
-      {
-        provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-        recaptchaParameters: {
-          size: getRecaptchaMode()
         },
-      },
       {
         provider: 'microsoft.com',
         loginHintKey: 'login_hint'
@@ -79,6 +54,14 @@ function getUiConfig() {
         provider: 'apple.com',
       },
       firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
+      },*/
+      {
+        provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+        recaptchaParameters: {
+          size: 'invisible'
+        },
+        defaultCountry: 'VN'
+      },
     ],
     // Terms of service url.
     'tosUrl': 'https://www.google.com',
@@ -88,7 +71,7 @@ function getUiConfig() {
         firebaseui.auth.CredentialHelper.GOOGLE_YOLO :
         firebaseui.auth.CredentialHelper.NONE,
     'adminRestrictedOperation': {
-      status: getAdminRestrictedOperationStatus()
+      status: false
     }
   };
 }
@@ -99,22 +82,12 @@ var ui = new firebaseui.auth.AuthUI(firebase.auth());
 ui.disableAutoSignIn();
 
 
-/**
- * @return {string} The URL of the FirebaseUI standalone widget.
- */
-function getWidgetUrl() {
-  return '/widget#recaptcha=' + getRecaptchaMode() + '&emailSignInMethod=' +
-      getEmailSignInMethod() + '&disableEmailSignUpStatus=' +
-      getDisableSignUpStatus() + '&adminRestrictedOperationStatus=' +
-      getAdminRestrictedOperationStatus();
-}
-
 
 /**
  * Redirects to the FirebaseUI widget.
  */
 var signInWithRedirect = function() {
-  window.location.assign(getWidgetUrl());
+  window.location.assign('/');
 };
 
 
@@ -122,7 +95,7 @@ var signInWithRedirect = function() {
  * Open a popup with the FirebaseUI widget.
  */
 var signInWithPopup = function() {
-  window.open(getWidgetUrl(), 'Sign In', 'width=985,height=735');
+  window.open('/', 'Sign In', 'width=985,height=735');
 };
 
 
@@ -195,21 +168,6 @@ var deleteAccount = function() {
  * disableSignUp config.
  */
 function handleConfigChange() {
-  var newRecaptchaValue = document.querySelector(
-      'input[name="recaptcha"]:checked').value;
-  var newEmailSignInMethodValue = document.querySelector(
-      'input[name="emailSignInMethod"]:checked').value;
-  var currentDisableSignUpStatus =
-      document.getElementById("email-disableSignUp-status").checked;
-  var currentAdminRestrictedOperationStatus =
-      document.getElementById("admin-restricted-operation-status").checked;
-  location.replace(
-      location.pathname + '#recaptcha=' + newRecaptchaValue +
-      '&emailSignInMethod=' + newEmailSignInMethodValue +
-      '&disableEmailSignUpStatus=' + currentDisableSignUpStatus +
-      '&adminRestrictedOperationStatus=' +
-      currentAdminRestrictedOperationStatus);
-  // Reset the inline widget so the config changes are reflected.
   ui.reset();
   ui.start('#firebaseui-container', getUiConfig());
 }
@@ -230,32 +188,5 @@ var initApp = function() {
       'click', function() {
         deleteAccount();
       });
-
-  document.getElementById('recaptcha-normal').addEventListener(
-      'change', handleConfigChange);
-  document.getElementById('recaptcha-invisible').addEventListener(
-      'change', handleConfigChange);
-  // Check the selected reCAPTCHA mode.
-  document.querySelector(
-      'input[name="recaptcha"][value="' + getRecaptchaMode() + '"]')
-      .checked = true;
-
-  document.getElementById('email-signInMethod-password').addEventListener(
-      'change', handleConfigChange);
-  document.getElementById('email-signInMethod-emailLink').addEventListener(
-      'change', handleConfigChange);
-  // Check the selected email signInMethod mode.
-  document.querySelector(
-      'input[name="emailSignInMethod"][value="' + getEmailSignInMethod() + '"]')
-      .checked = true;
-  document.getElementById('email-disableSignUp-status').addEventListener(
-      'change', handleConfigChange);
-  document.getElementById("email-disableSignUp-status").checked =
-      getDisableSignUpStatus();  
-  document.getElementById('admin-restricted-operation-status').addEventListener(
-      'change', handleConfigChange);
-  document.getElementById("admin-restricted-operation-status").checked =
-      getAdminRestrictedOperationStatus();  
 };
-debugger;
 window.addEventListener('load', initApp);
