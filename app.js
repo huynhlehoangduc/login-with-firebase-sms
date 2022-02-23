@@ -63,6 +63,7 @@ function getUiConfig() {
         defaultCountry: 'VN'
       },
     ],
+    signInSuccessUrl: 'google.com',
     // Terms of service url.
     'tosUrl': 'https://www.google.com',
     // Privacy policy url.
