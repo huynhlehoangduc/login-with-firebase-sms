@@ -7,6 +7,7 @@ var config = {
   appId: "1:569317017093:web:8374161772d0e1c0f3fe6c",
   measurementId: "G-LP62J8P5L7"
 };
+debugger;
 firebase.initializeApp(config);
 
 
@@ -14,3 +15,4 @@ firebase.initializeApp(config);
 // Set to null if One-tap sign-up is not supported.
 var CLIENT_ID =
     null;
+const REDIRECT_HOST = 'http://localhost:8000';

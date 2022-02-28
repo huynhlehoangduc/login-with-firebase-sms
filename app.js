@@ -8,6 +8,7 @@ function getUiConfig() {
       'signInSuccessWithAuthResult': function(authResult, redirectUrl) {
         if (authResult.user) {
           handleSignedInUser(authResult.user);
+          window.location.href = `${REDIRECT_HOST}/auth/phone_redirect?firebase_id_token=${authResult.user.auth.currentUser.accessToken}`;
         }
         if (authResult.additionalUserInfo) {
           document.getElementById('is-new-user').textContent =
@@ -43,6 +44,7 @@ function getUiConfig() {
   };
 }
 
+debugger;
 // Initialize the FirebaseUI Widget using Firebase.
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
 // Disable auto-sign in.
